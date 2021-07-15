@@ -82,9 +82,14 @@ echo '::endgroup::'
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
+echo '::group:: Getting changed files list'
+CHANGED_FILES=$(git diff --name-only "${BASE_REF}..${HEAD_REF}" '**/*.rb')
+echo "$CHANGED_FILES"
+echo '::endgroup::'
+
 echo '::group:: Running rubocop with reviewdog 🐶 ...'
 # shellcheck disable=SC2086
-rubocop ${INPUT_RUBOCOP_FLAGS} \
+rubocop ${INPUT_RUBOCOP_FLAGS} ${CHANGED_FILES} \
   | reviewdog -f=rubocop \
       -name="${INPUT_TOOL_NAME}" \
       -reporter="${INPUT_REPORTER}" \

@@ -60,6 +60,8 @@ runs:
         INPUT_FAIL_ON_ERROR: ${{ inputs.fail_on_error }}
         INPUT_REVIEWDOG_FLAGS: ${{ inputs.reviewdog_flags }}
         INPUT_WORKDIR: ${{ inputs.workdir }}
+        BASE_REF: ${{ github.event.pull_request.base.sha }}
+        HEAD_REF: ${{ github.sha }}
 branding:
   icon: 'check-circle'
   color: 'red'
