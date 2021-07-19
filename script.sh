@@ -83,7 +83,7 @@ echo '::endgroup::'
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
 echo '::group:: Getting changed files list'
-CHANGED_FILES=$(git diff --name-only "${BASE_REF}..${HEAD_REF}" '**/*.rb')
+CHANGED_FILES=$(git diff --diff-filter=d --name-only "${BASE_REF}..${HEAD_REF}" '**/*.rb')
 echo "$CHANGED_FILES"
 echo '::endgroup::'
 
