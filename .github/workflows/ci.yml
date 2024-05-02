@@ -11,6 +11,14 @@ jobs:
       BUNDLE_GEMFILE: ${{ github.workspace }}/test/using_bundler/Gemfile
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch all commits for PR branch plus head commit of base branch
+        run: |
+          # fetch all commits of the PR branch
+          git fetch --shallow-exclude "${{ github.base_ref }}" origin "${{ github.head_ref }}"
+          # fix for "fatal: error in object: unshallow"
+          git repack -d
+          # fetch head commit of base branch
+          git fetch --deepen 1 origin "${{ github.head_ref }}"
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
