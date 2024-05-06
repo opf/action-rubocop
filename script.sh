@@ -2,12 +2,6 @@
 
 set -e
 
-version() {
-  if [ -n "$1" ]; then
-    echo "-v $1"
-  fi
-}
-
 cd "${GITHUB_WORKSPACE}/${INPUT_WORKDIR}" || exit
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
