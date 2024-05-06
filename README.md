@@ -98,6 +98,11 @@ Optional. Do not install Rubocop or its extensions. Default: `false`.
 
 Optional. Run Rubocop with bundle exec. Default: `false`.
 
+### `only_changed`
+
+Optional. Run Rubocop only on changed (and added) files, for speedup [`true`, `false`].
+Default: `false`.
+
 ## Example usage
 
 This action will use your [RuboCop Configuration](https://docs.rubocop.org/rubocop/configuration.html) automatically.
