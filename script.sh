@@ -89,16 +89,28 @@ fi
 
 if [ "${INPUT_ONLY_CHANGED}" = "true" ]; then
   echo '::group:: Getting changed files list'
+
+  # get intersection of changed files (excluding deleted) with target files for
+  # rubocop as an array
+  # shellcheck disable=SC2086
   readarray -t CHANGED_FILES < <(
     comm -12 \
       <(git diff --diff-filter=d --name-only "${BASE_REF}..${HEAD_REF}" | sort) \
       <(${BUNDLE_EXEC}rubocop --list-target-files | sort)
   )
+
+  if (( ${#CHANGED_FILES[@]} == 0 )); then
+    echo "No relevant files for rubocop, skipping"
+    exit 0
+  fi
+
   echo "${CHANGED_FILES[@]}"
+
   if (( ${#CHANGED_FILES[@]} > 100 )); then
     echo "More than 100 changed files (${#CHANGED_FILES[@]}), running rubocop on all files"
     unset CHANGED_FILES
   fi
+
   echo '::endgroup::'
 fi
 
