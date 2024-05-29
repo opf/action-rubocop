@@ -104,7 +104,7 @@ if [ "${INPUT_ONLY_CHANGED}" = "true" ]; then
     exit 0
   fi
 
-  echo "${CHANGED_FILES[@]}"
+  printf '%s\n' "${CHANGED_FILES[@]}"
 
   if (( ${#CHANGED_FILES[@]} > 100 )); then
     echo "More than 100 changed files (${#CHANGED_FILES[@]}), running rubocop on all files"
