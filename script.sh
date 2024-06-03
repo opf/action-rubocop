@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-set -o pipefail
 
 cd "${GITHUB_WORKSPACE}/${INPUT_WORKDIR}" || exit
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
@@ -96,8 +95,8 @@ if [ "${INPUT_ONLY_CHANGED}" = "true" ]; then
   # shellcheck disable=SC2086
   readarray -t CHANGED_FILES < <(
     comm -12 \
-      <(git diff --diff-filter=d --name-only "${BASE_REF}..${HEAD_REF}" | sort || kill $$) \
-      <(${BUNDLE_EXEC}rubocop --list-target-files | sort || kill $$)
+      <(git diff --diff-filter=d --name-only "${BASE_REF}..${HEAD_REF}" | sort) \
+      <(${BUNDLE_EXEC}rubocop --list-target-files | sort)
   )
 
   if (( ${#CHANGED_FILES[@]} == 0 )); then
